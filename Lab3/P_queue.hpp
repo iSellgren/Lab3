@@ -5,7 +5,7 @@
 //  Created by Fredrik Sellgren on 2018-12-03.
 //  Copyright © 2018 Fredrik Sellgren. All rights reserved.
 
-// implementation behöver ligga i headern
+// implementation borde ligga i headern
 // När man kompillerar en template så tittar kompilatorn in i templaten, samt in i
 // template argumentens typ, detta görs för att den vill ha info för att generera optimal kod.
 // Kompilatorer idag kräver att mallen är helt definerad när den används.
@@ -26,7 +26,9 @@ class P_queue
 public:
     T pop()
     {
+
         T value = Elements.front();
+        
         Elements.erase(Elements.begin());
         return value;
     }
@@ -36,28 +38,33 @@ public:
         Comparison comp;
         auto min = std::find_if(Elements.begin(), Elements.end(), [comp,&value](const T & e)
         {
+            
             return (comp(e, value));
         });
+        
         Elements.insert(min, value);
     }
 
     size_t size() const
-    {
+    {   // Return number of elements in the queue
         return Elements.size();
     }
     
     bool empty() const
     {
+        //Returns true if the queue is empty
         return Elements.empty();
     }
     
     const T& top() const
     {
+        //Return reference to the first element
         return Elements.front();
     }
     
     void print() const
     {
+        // Printing the element.
         for(auto &element : Elements)
         {
             std::cout << element << "\n";

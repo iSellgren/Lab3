@@ -4,9 +4,13 @@
 //
 //  Created by Fredrik Sellgren on 2018-12-03.
 //  Copyright © 2018 Fredrik Sellgren. All rights reserved.
+
+//  Skapa en prioriterad kö.
+//  Med funktionerna pop():T , push(T e) , size_t size(), bool empty const.
+//  jämförelsefunktion för att hålla kön sorterad.
+//
 //
 
-#include <iostream>
 #include "P_queue.hpp"
 #include <string>
 #include <random>
@@ -15,7 +19,6 @@ struct Broker
 {
     std::string Name;
     int Value;
-    
 };
 
 std::ostream &operator << (std::ostream& stream, const Broker& Brokers)
@@ -23,17 +26,17 @@ std::ostream &operator << (std::ostream& stream, const Broker& Brokers)
     stream << Brokers.Name << " " << Brokers.Value;
     return stream;    
 }
-
+// predikat/jämförelsefunktion
 struct CompareBroker
 {
-    //CompareBroker so that the higest prio stands first.
     bool operator() (const Broker lhs, const Broker rhs)const
     {
         return lhs.Value > rhs.Value;
     }
 };
-void Wallstreet(P_queue<Broker,CompareBroker> &Buyer, P_queue <Broker,CompareBroker> &Seller)
-{
+
+void WallStreet(P_queue<Broker,CompareBroker> &Buyer, P_queue <Broker,CompareBroker> &Seller)
+{   //
     while (!Buyer.empty() && !Seller.empty())
     {
     auto Buy = Buyer.pop();
@@ -41,7 +44,7 @@ void Wallstreet(P_queue<Broker,CompareBroker> &Buyer, P_queue <Broker,CompareBro
 
         if(Sell.Value <= Buy.Value)
         {
-            std::cout << Sell.Name << " säljer för " << Sell.Value << " " << Buy.Name
+            std::cout << Sell.Name << " säljer för " << Sell.Value << " || " << Buy.Name
             << " köper denna för " << Buy.Value <<"\n";
         }
     }
@@ -69,7 +72,8 @@ int main() {
       std::cout << "---Sellers---" << "\n";
     Sellers.print();
     
-    Wallstreet(Buyers, Sellers);
+    
+    WallStreet(Buyers, Sellers);
     
     return 0;
 }
